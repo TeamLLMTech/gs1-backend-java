@@ -16,8 +16,8 @@ public class Pais {
     @Column(nullable = false, length = 3, columnDefinition = "char")
     private String sigla;
 
-//    @OneToMany(mappedBy = "pais")
-//    private List<Estado> estados;
+    @OneToMany(mappedBy = "pais")
+    private List<Estado> estados;
 
 
     public Long getIdPais() {
@@ -42,6 +42,14 @@ public class Pais {
 
     public void setSigla(String sigla) {
         this.sigla = sigla;
+    }
+
+    public List<Estado> getEstados() {
+        return estados;
+    }
+
+    public void setEstados(List<Estado> estados) {
+        this.estados = estados;
     }
 }
 
