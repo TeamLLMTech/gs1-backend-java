@@ -1,4 +1,4 @@
-# API Mottag
+# API Eventos Extremos
 
 API desenvolvida em Java 21 com Spring Boot para o projeto Global Solution do primeiro semestre de 2025 da FIAP.
 
