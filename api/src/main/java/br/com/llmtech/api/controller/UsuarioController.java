@@ -1,11 +1,14 @@
 package br.com.llmtech.api.controller;
 
+import br.com.llmtech.api.dto.UsuarioLoginRequestDTO;
+import br.com.llmtech.api.dto.UsuarioLoginResponseDTO;
 import br.com.llmtech.api.dto.UsuarioRequestDTO;
 import br.com.llmtech.api.dto.UsuarioResponseDTO;
 import br.com.llmtech.api.dto.common.ApiErrorDTO;
 import br.com.llmtech.api.dto.common.ApiResponseDTO;
 import br.com.llmtech.api.openapi.model.ApiResponseUsuarioDTO;
 import br.com.llmtech.api.openapi.model.ApiResponseUsuarioListDTO;
+import br.com.llmtech.api.openapi.model.ApiResponseUsuarioLoginDTO;
 import br.com.llmtech.api.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -33,6 +36,18 @@ public class UsuarioController {
 
     public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
+    }
+
+    @Operation(summary = "Realiza o login do usuário")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Login realizado com sucesso", content = @Content(schema = @Schema(implementation = ApiResponseUsuarioLoginDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Parâmetros informados são inválidos", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorDTO.class))),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorDTO.class)))
+    })
+    @PostMapping("/login")
+    public ResponseEntity<UsuarioLoginResponseDTO> login(@Valid @RequestBody UsuarioLoginRequestDTO dto) {
+        UsuarioLoginResponseDTO response = usuarioService.login(dto);
+        return ResponseEntity.ok(response);
     }
 
     @Operation(summary = "Cria um novo usuário")

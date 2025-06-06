@@ -1,26 +1,44 @@
 package br.com.llmtech.api.service;
 
+import br.com.llmtech.api.dto.UsuarioLoginRequestDTO;
+import br.com.llmtech.api.dto.UsuarioLoginResponseDTO;
 import br.com.llmtech.api.dto.UsuarioRequestDTO;
 import br.com.llmtech.api.dto.UsuarioResponseDTO;
 import br.com.llmtech.api.exception.NotFoundException;
+import br.com.llmtech.api.exception.UnauthorizedException;
 import br.com.llmtech.api.mapper.UsuarioMapper;
 import br.com.llmtech.api.model.Usuario;
 import br.com.llmtech.api.repository.UsuarioRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
+    private final TokenService tokenService;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository, TokenService tokenService) {
         this.usuarioRepository = usuarioRepository;
+        this.tokenService = tokenService;
+    }
+
+    public UsuarioLoginResponseDTO login(UsuarioLoginRequestDTO loginDTO) {
+        var usuario = usuarioRepository.findByEmail(loginDTO.getEmail());
+        if (usuario != null && new BCryptPasswordEncoder().matches(loginDTO.getSenha(), usuario.getSenha())) {
+            return new UsuarioLoginResponseDTO(
+                tokenService.generateToken(loginDTO.getEmail())
+            );
+        }
+        throw new UnauthorizedException("Usuário ou senha incorretos");
     }
 
     @Transactional
     public UsuarioResponseDTO save(UsuarioRequestDTO dto) {
+        String encryptedPwd = new BCryptPasswordEncoder().encode(dto.getSenha());
+        dto.setSenha(encryptedPwd);
         Usuario saved = usuarioRepository.save(UsuarioMapper.fromDTO(dto));
         return UsuarioMapper.toDTO(saved);
     }

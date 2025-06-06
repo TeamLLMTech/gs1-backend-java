@@ -81,6 +81,18 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.METHOD_NOT_ALLOWED);
     }
 
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<ApiErrorDTO> handleForbiddenException(ForbiddenException ex) {
+        ApiErrorDTO error = new ApiErrorDTO(ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ApiErrorDTO> handleUnauthorizedException(UnauthorizedException ex) {
+        ApiErrorDTO error = new ApiErrorDTO(ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+    }
+
     // Catch all other exceptions
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiErrorDTO> handleAllOtherExceptions(Exception ex) {
