@@ -1,5 +1,7 @@
 package br.com.llmtech.api.model;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity(name = "MUNICIPIOS")
@@ -15,6 +17,9 @@ public class Municipio {
     @ManyToOne
     @JoinColumn(name = "id_estado", nullable = false)
     private Estado estado;
+
+    @OneToMany(mappedBy = "municipio")
+    private List<RegiaoMonitorada> regioesMonitoradas;
 
     public Long getIdMunicipio() {
         return idMunicipio;
