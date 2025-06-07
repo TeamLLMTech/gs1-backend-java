@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -27,6 +28,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/eventos")
 @Tag(name = "eventos", description = "CRUD de Eventos")
+@SecurityRequirement(name = "Bearer Authentication")
 public class EventoController {
 
     private final EventoService eventoService;
@@ -60,7 +62,7 @@ public class EventoController {
             @ApiResponse(responseCode = "400", description = "Parâmetros informados são inválidos", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorDTO.class)))
     })
     @GetMapping
-    public ResponseEntity<ApiResponseDTO<List<EventoResponseDTO>>> findAll(@PageableDefault Pageable pageable) {
+    public ResponseEntity<ApiResponseDTO<List<EventoResponseDTO>>> findAll(@Parameter(hidden = true) @PageableDefault Pageable pageable) {
         Page<EventoResponseDTO> page = eventoService.findAll(pageable);
         ApiResponseDTO<List<EventoResponseDTO>> response = new ApiResponseDTO<>(page.getContent());
         return ResponseEntity.ok(response);

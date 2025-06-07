@@ -59,7 +59,7 @@ Acesse a documentação interativa em:
 http://localhost:8080/swagger-ui.html
 ```
 
-## Testeando a API
+## Testando a API
 
 Para utilizar a API você deve estar autenticado.
 Utilize o endpoint de criação de usuário para registrar um novo usuário:
@@ -85,6 +85,10 @@ POST /usuarios/login
 }
 ```
 O token JWT retornado deve ser incluído no cabeçalho `Authorization` das requisições subsequentes, no formato `Bearer <token>`.
+
+Observações:
+- O token JWT tem validade de 1 hora.
+- A autenticação é necessária para acessar todos os endpoints, exceto o de criação de usuário e login (aplicação pública).
 
 ## Estrutura do Projeto
 - `config/`: Configurações gerais da aplicação

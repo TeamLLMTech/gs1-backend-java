@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -74,8 +75,9 @@ public class UsuarioController {
             @ApiResponse(responseCode = "200", description = "Listagem de usuários bem-sucedida", content = @Content(schema = @Schema(implementation = ApiResponseUsuarioListDTO.class))),
             @ApiResponse(responseCode = "400", description = "Parâmetros informados são inválidos", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorDTO.class)))
     })
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping
-    public ResponseEntity<ApiResponseDTO<List<UsuarioResponseDTO>>> findAll(@PageableDefault Pageable pageable) {
+    public ResponseEntity<ApiResponseDTO<List<UsuarioResponseDTO>>> findAll(@Parameter(hidden = true) @PageableDefault Pageable pageable) {
         Page<UsuarioResponseDTO> page = usuarioService.findAll(pageable);
         ApiResponseDTO<List<UsuarioResponseDTO>> response = new ApiResponseDTO<>(page.getContent());
         return ResponseEntity.ok(response);
@@ -87,6 +89,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "400", description = "Parâmetros informados são inválidos", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorDTO.class))),
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado para o ID fornecido", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorDTO.class)))
     })
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioResponseDTO> findById(@PathVariable Long id) {
         UsuarioResponseDTO response = usuarioService.findById(id);
@@ -100,6 +103,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado para o ID fornecido", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorDTO.class))),
             @ApiResponse(responseCode = "422", description = "Parâmetros informados não atendem aos requisitos esperados", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorDTO.class)))
     })
+    @SecurityRequirement(name = "Bearer Authentication")
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioResponseDTO> update(@PathVariable Long id, @Valid @RequestBody UsuarioRequestDTO dto) {
         UsuarioResponseDTO response = usuarioService.update(id, dto);
@@ -112,6 +116,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "400", description = "Parâmetros informados são inválidos", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorDTO.class))),
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado para o ID fornecido", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorDTO.class)))
     })
+    @SecurityRequirement(name = "Bearer Authentication")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         usuarioService.delete(id);

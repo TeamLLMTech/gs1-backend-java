@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -29,6 +30,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/paises")
 @Tag(name = "paises", description = "CRUD de Países")
+@SecurityRequirement(name = "Bearer Authentication")
 public class PaisController {
 
     private final PaisService paisService;
@@ -61,7 +63,7 @@ public class PaisController {
             @ApiResponse(responseCode = "400", description = "Parâmetros informados são inválidos", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorDTO.class)))
     })
     @GetMapping
-    public ResponseEntity<ApiResponseDTO<List<PaisResponseDTO>>> findAll(@PageableDefault Pageable pageable) {
+    public ResponseEntity<ApiResponseDTO<List<PaisResponseDTO>>> findAll(@Parameter(hidden = true) @PageableDefault Pageable pageable) {
         Page<PaisResponseDTO> page = paisService.findAll(pageable);
         PaginationDTO pagination = PaginationDTO.fromPage(page);
         return ResponseEntity.ok(new ApiResponseWithPaginationDTO<>(page.getContent(), pagination));

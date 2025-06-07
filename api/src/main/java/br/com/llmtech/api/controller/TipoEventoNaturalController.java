@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -27,6 +28,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/tipos-evento-natural")
 @Tag(name = "tipos-evento-natural", description = "CRUD de Tipos de Evento Natural")
+@SecurityRequirement(name = "Bearer Authentication")
 public class TipoEventoNaturalController {
 
     private final TipoEventoNaturalService tipoEventoNaturalService;
@@ -60,7 +62,7 @@ public class TipoEventoNaturalController {
             @ApiResponse(responseCode = "400", description = "Parâmetros informados são inválidos", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorDTO.class)))
     })
     @GetMapping
-    public ResponseEntity<ApiResponseDTO<List<TipoEventoNaturalResponseDTO>>> findAll(@PageableDefault Pageable pageable) {
+    public ResponseEntity<ApiResponseDTO<List<TipoEventoNaturalResponseDTO>>> findAll(@Parameter(hidden = true) @PageableDefault Pageable pageable) {
         Page<TipoEventoNaturalResponseDTO> page = tipoEventoNaturalService.findAll(pageable);
         ApiResponseDTO<List<TipoEventoNaturalResponseDTO>> response = new ApiResponseDTO<>(page.getContent());
         return ResponseEntity.ok(response);

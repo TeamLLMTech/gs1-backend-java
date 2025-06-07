@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/usuario-regiao")
 @Tag(name = "usuario-regiao", description = "CRUD de Usuário-Região")
+@SecurityRequirement(name = "Bearer Authentication")
 public class UsuarioRegiaoController {
 
     private final UsuarioRegiaoService usuarioRegiaoService;
@@ -61,7 +63,7 @@ public class UsuarioRegiaoController {
             @ApiResponse(responseCode = "400", description = "Parâmetros informados são inválidos", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorDTO.class)))
     })
     @GetMapping
-    public ResponseEntity<ApiResponseDTO<List<UsuarioRegiaoResponseDTO>>> list(@PageableDefault Pageable pageable) {
+    public ResponseEntity<ApiResponseDTO<List<UsuarioRegiaoResponseDTO>>> list(@Parameter(hidden = true) @PageableDefault Pageable pageable) {
         Page<UsuarioRegiaoResponseDTO> page = usuarioRegiaoService.findAll(pageable);
         ApiResponseDTO<List<UsuarioRegiaoResponseDTO>> response = new ApiResponseDTO<>(page.getContent());
         return ResponseEntity.ok(response);
