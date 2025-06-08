@@ -25,7 +25,10 @@ Grupo LLM
 
 ## Pré-requisitos
 - Java 21 SDK instalado e configurado
-- Banco de dados Oracle (local ou remoto) com schema configurado (arquivo DDL disponível em `db/ddl.sql`) (o JPA está no modo `validate`, ou seja, não cria o schema automaticamente, apenas valida a existência do schema)
+- Banco de dados Oracle (local ou remoto) com schema configurado:
+  - Arquivo DDL disponível em `db/ddl.sql`
+  - O JPA está no modo `validate`, ou seja, não cria o schema automaticamente, apenas valida a existência do schema
+  - Arquivo DML com dados de exemplo disponível em `db/dml.sql`
 - Variáveis de ambiente configuradas:
   - `DB_URL`: URL do banco de dados Oracle (no formato `host:port/sid`)
   - `DB_USER`: Usuário do banco de dados
