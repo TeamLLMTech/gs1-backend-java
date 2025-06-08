@@ -58,6 +58,10 @@ public class UsuarioService {
     public UsuarioResponseDTO update(Long id, UsuarioRequestDTO dto) {
         Usuario usuario = usuarioRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("Usuário não encontrado com o ID: " + id));
+
+        String encryptedPwd = new BCryptPasswordEncoder().encode(dto.getSenha());
+        dto.setSenha(encryptedPwd);
+
         UsuarioMapper.updateEntityUsingDTO(usuario, dto);
         return UsuarioMapper.toDTO(usuarioRepository.save(usuario));
     }

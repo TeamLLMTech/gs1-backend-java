@@ -35,6 +35,9 @@ public class Usuario implements UserDetails {
     @Temporal(TemporalType.DATE)
     private Date dataCadastro;
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UsuarioRegiao> regioes;
+
     public Long getIdUsuario() {
         return idUsuario;
     }
@@ -124,5 +127,13 @@ public class Usuario implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public List<UsuarioRegiao> getRegioes() {
+        return regioes;
+    }
+
+    public void setRegioes(List<UsuarioRegiao> regioes) {
+        this.regioes = regioes;
     }
 }
