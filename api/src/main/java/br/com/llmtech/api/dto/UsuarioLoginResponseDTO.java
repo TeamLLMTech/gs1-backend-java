@@ -3,12 +3,14 @@ package br.com.llmtech.api.dto;
 public class UsuarioLoginResponseDTO {
 
   private String token;
+  private Long idUsuario;
 
   public UsuarioLoginResponseDTO() {
   }
 
-  public UsuarioLoginResponseDTO(String token) {
+  public UsuarioLoginResponseDTO(String token, Long idUsuario) {
     this.token = token;
+    this.idUsuario = idUsuario;
   }
 
   public String getToken() {
@@ -18,4 +20,11 @@ public class UsuarioLoginResponseDTO {
     this.token = token;
   }
 
+  public Long getIdUsuario() {
+    return idUsuario;
+  }
+
+  public void setIdUsuario(Long idUsuario) {
+    this.idUsuario = idUsuario;
+  }
 }

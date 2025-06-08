@@ -18,12 +18,13 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
 
-    public String generateToken(String username) {
+    public String generateToken(String username, Long idUsuario) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withIssuer("llmtech")
                     .withSubject(username)
+                    .withClaim("idUsuario", idUsuario)
                     .withExpiresAt(genExpirationInstant())
                     .sign(algorithm);
         } catch (JWTCreationException exception) {

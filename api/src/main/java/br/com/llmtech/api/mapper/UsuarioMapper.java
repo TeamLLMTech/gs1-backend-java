@@ -10,7 +10,6 @@ public class UsuarioMapper {
         dto.setIdUsuario(usuario.getIdUsuario());
         dto.setNome(usuario.getNome());
         dto.setEmail(usuario.getEmail());
-        dto.setSenha(usuario.getSenha());
         dto.setPerfil(usuario.getPerfil());
         dto.setAtivo(usuario.getAtivo());
         dto.setDataCadastro(usuario.getDataCadastro());

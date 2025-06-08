@@ -26,10 +26,11 @@ public class UsuarioService {
     }
 
     public UsuarioLoginResponseDTO login(UsuarioLoginRequestDTO loginDTO) {
-        var usuario = usuarioRepository.findByEmail(loginDTO.getEmail());
+        Usuario usuario = usuarioRepository.findByEmail(loginDTO.getEmail());
         if (usuario != null && new BCryptPasswordEncoder().matches(loginDTO.getSenha(), usuario.getSenha())) {
             return new UsuarioLoginResponseDTO(
-                tokenService.generateToken(loginDTO.getEmail())
+                tokenService.generateToken(loginDTO.getEmail(), usuario.getIdUsuario()),
+                usuario.getIdUsuario()
             );
         }
         throw new UnauthorizedException("Usuário ou senha incorretos");
