@@ -5,6 +5,11 @@ API desenvolvida em Java 21 com Spring Boot para o projeto Global Solution do pr
 ## Descrição
 Esta API gerencia alertas e previsões de eventos extremos, permitindo operações de cadastro, consulta, atualização e remoção (CRUD) destes recursos e recursos auxiliares (usuários, tipos, etc.). Utiliza Spring Boot, Spring Data JPA, Spring Security, validação e documentação automática com OpenAPI/Swagger. A API persiste dados em um banco de dados Oracle.
 
+## Vídeos
+
+- [Vídeo Pitch]()
+- [Vídeo de Demonstração](https://youtu.be/XRxrgYra8A8)
+
 ## Sobre nós
 Desenvolvido para a Global Solution FIAP 1º Semestre 2025 por:
 
