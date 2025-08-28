@@ -19,7 +19,7 @@ public class RegiaoMonitorada {
     @Column
     private Integer populacaoEstimada;
 
-    @Column(columnDefinition = "CLOB")
+    @Column()
     private String descriacaoArea;
 
     @ManyToOne

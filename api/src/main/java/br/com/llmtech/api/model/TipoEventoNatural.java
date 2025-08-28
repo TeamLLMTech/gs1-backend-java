@@ -13,7 +13,7 @@ public class TipoEventoNatural {
     @Column(nullable = false, length = 50)
     private String tipoEvento;
 
-    @Column(columnDefinition = "CLOB")
+    @Column()
     private String descricao;
 
     @Column

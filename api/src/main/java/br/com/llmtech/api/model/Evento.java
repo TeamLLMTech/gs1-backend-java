@@ -23,7 +23,7 @@ public class Evento {
     @Temporal(TemporalType.DATE)
     private Date geradoEm;
 
-    @Column(columnDefinition = "CLOB")
+    @Column()
     private String descricao;
 
     @ManyToOne

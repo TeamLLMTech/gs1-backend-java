@@ -13,7 +13,7 @@ public class Pais {
     @Column(nullable = false, length = 100)
     private String nome;
 
-    @Column(nullable = false, length = 3, columnDefinition = "char")
+    @Column(nullable = false, length = 3)
     private String sigla;
 
     @OneToMany(mappedBy = "pais")

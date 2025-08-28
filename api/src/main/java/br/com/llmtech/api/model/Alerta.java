@@ -12,7 +12,7 @@ public class Alerta {
     @Column(nullable = false)
     private Short nivelAlerta;
 
-    @Column(nullable = false, columnDefinition = "CLOB")
+    @Column(nullable = false)
     private String mensagemAlerta;
 
     @Column(nullable = false)

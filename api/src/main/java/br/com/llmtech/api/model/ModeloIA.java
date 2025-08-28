@@ -28,7 +28,7 @@ public class ModeloIA {
     @Column(precision = 5, scale = 2)
     private BigDecimal acuracia;
 
-    @Column(columnDefinition = "CLOB")
+    @Column()
     private String descricaoModelo;
 
     @OneToMany(mappedBy = "modelo")
